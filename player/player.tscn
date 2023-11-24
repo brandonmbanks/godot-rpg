@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://kqt5pbajrxle"]
+[gd_scene load_steps=32 format=3 uid="uid://kqt5pbajrxle"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_kn1y0"]
 [ext_resource type="Texture2D" uid="uid://cgeot52pnwe4y" path="res://player/Player.png" id="1_yymew"]
@@ -158,9 +158,77 @@ tracks/0/keys = {
 "values": [7, 8, 9, 10, 11, 6]
 }
 
+[sub_resource type="Animation" id="Animation_xn0iw"]
+resource_name = "attack_down"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39]
+}
+
+[sub_resource type="Animation" id="Animation_d7qdm"]
+resource_name = "attack_left"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [32, 33, 34, 35]
+}
+
+[sub_resource type="Animation" id="Animation_qpe6s"]
+resource_name = "attack_right"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27]
+}
+
+[sub_resource type="Animation" id="Animation_5nala"]
+resource_name = "attack_up"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [28, 29, 30, 31]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bxcku"]
 _data = {
 "RESET": SubResource("Animation_7muc7"),
+"attack_down": SubResource("Animation_xn0iw"),
+"attack_left": SubResource("Animation_d7qdm"),
+"attack_right": SubResource("Animation_qpe6s"),
+"attack_up": SubResource("Animation_5nala"),
 "idle_down": SubResource("Animation_uce2u"),
 "idle_left": SubResource("Animation_13y0n"),
 "idle_right": SubResource("Animation_dorgv"),
@@ -258,6 +326,5 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_xge03")
 anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/Idle/blend_position = Vector2(2.08165e-12, 2.08165e-12)
+parameters/Idle/blend_position = Vector2(2.08165e-12, 0.1)
 parameters/Run/blend_position = Vector2(2.08165e-12, 2.08165e-12)
