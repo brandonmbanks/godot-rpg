@@ -21,8 +21,8 @@ func _ready() -> void:
 	animation_tree.active = true
 
 func _input(_event: InputEvent) -> void:
-	input_vector.x = Input.get_axis("ui_left", "ui_right")
-	input_vector.y = Input.get_axis("ui_up", "ui_down")
+	if Input.is_action_just_pressed("attack"):
+		state = states.ATTACK
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -34,11 +34,16 @@ func _physics_process(delta: float) -> void:
 			roll_state(delta)
 
 func move_state(delta: float) -> void:
+	input_vector.x = Input.get_axis("ui_left", "ui_right")
+	input_vector.y = Input.get_axis("ui_up", "ui_down")
 	input_vector = input_vector.normalized()
 
 	if input_vector != Vector2.ZERO:
 		animation_tree.set("parameters/Idle/blend_position", input_vector)
 		animation_tree.set("parameters/Run/blend_position", input_vector)
+		# we dont want the player to change their position while attacking
+		# we set the blend position here so the position is set
+		animation_tree.set("parameters/Attack/blend_position", input_vector)
 		animation_state.travel("Run")
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCEL * delta)
 	else:
@@ -48,7 +53,15 @@ func move_state(delta: float) -> void:
 	move_and_slide()
 
 func attack_state(delta: float) -> void:
-	pass
+	animation_state.travel("Attack")
+	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+	move_and_slide()
 
 func roll_state(delta: float) -> void:
 	pass
+
+# this is created by clicking the AnimationTree than the Node tab
+# double click the animation_finished Signal and connect it to the Player Node
+func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+	if "attack_" in anim_name or "roll_" in anim_name:
+		state = states.MOVE
