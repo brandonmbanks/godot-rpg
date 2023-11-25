@@ -20,11 +20,7 @@ var input_vector: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	animation_tree.active = true
 
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("attack"):
-		state = states.ATTACK
-
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	match state:
 		states.MOVE:
 			move_state(delta)
@@ -51,6 +47,9 @@ func move_state(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
 	move_and_slide()
+
+	if Input.is_action_just_pressed("attack"):
+		state = states.ATTACK
 
 func attack_state(delta: float) -> void:
 	animation_state.travel("Attack")
